@@ -13,9 +13,6 @@ jobs:
     runs-on: ubuntu-latest
     
     steps:
-    - name: Install xmllint
-      run: sudo apt-get install -y gcc-13 gcc-13-aarch64-linux-gnu
-
     - uses: actions/checkout@v4
 
     - name: Set up Go
@@ -24,7 +21,7 @@ jobs:
         go-version: '1.20'
 
     - name: Build
-      run:  CGO_ENABLED=1 GOOS=linux GOARCH=arm64 go build -v -buildmode=c-shared -o out_telegram.so main.go
+      run:  CC=aarch64-linux-gnu-gcc CGO_ENABLED=1 GOOS=linux GOARCH=arm64 go build -v -buildmode=c-shared -o out_telegram.so main.go
 
     - name: Upload Go results
       uses: actions/upload-artifact@v4
